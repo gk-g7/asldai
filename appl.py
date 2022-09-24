@@ -1,4 +1,3 @@
-import random
 import fastapi
 import joblib
 import numpy as np
@@ -20,7 +19,7 @@ async def predict(file: bytes = fastapi.File(...)):
     dumpedPkl = joblib.load('dumps_pkl.pkl')
     return {"prediction": pred(file, dumpedPkl)}
 
-# Process image using mediapipe and return the co-ordinate values
+
 def mediapipe_image(image):
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     # Flip image around y-axis for correct handedness
@@ -63,6 +62,7 @@ def pre_process_img(file):
         csv_file_string = None
     return csv_file_string
 
+
 def pred(file, dumpedPkl):
     x = pre_process_img(file)
     if x is None or x == "":
@@ -84,12 +84,7 @@ def pred(file, dumpedPkl):
         mean = dumpedPkl["mean"]
         std = dumpedPkl["std"]
         x = x - mean
-        x = x/std
+        x = x / std
 
     svmSvc = dumpedPkl["svmSvc"]
     return int(svmSvc.predict(x)[0])
-
-
-
-
-
