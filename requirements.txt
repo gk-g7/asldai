@@ -7,4 +7,4 @@ numpy
 mediapipe
 pandas
 python-multipart
-opencv-contrib-python
+opencv-python-headless
