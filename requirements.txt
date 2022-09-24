@@ -4,7 +4,7 @@ uvicorn
 gunicorn
 sklearn
 numpy
-mediapipe
+mediapipe-silicon
 pandas
 python-multipart
-opencv-python-headless
+opencv-contrib-python
