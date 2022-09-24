@@ -5,6 +5,5 @@ gunicorn
 sklearn
 numpy
 mediapipe
-python-opencv
 pandas
 python-multipart
