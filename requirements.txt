@@ -3,8 +3,4 @@ joblib
 uvicorn
 gunicorn
 sklearn
-numpy
-opencv-python
-mediapipe
-pandas
 python-multipart
