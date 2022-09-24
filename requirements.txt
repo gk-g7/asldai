@@ -4,7 +4,7 @@ uvicorn
 gunicorn
 sklearn
 numpy
-opencv-contrib-python
+opencv-python-headless==4.2.0.32
 mediapipe
 pandas
 python-multipart
