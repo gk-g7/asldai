@@ -4,20 +4,33 @@ import numpy as np
 import cv2
 import mediapipe as mp
 import pandas as pd
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = fastapi.FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
+dumpedPkl = joblib.load('dumps_pkl.pkl')
+try:
+    dumpedPkl["df_col_names"].remove('Label')
+except:
+    pass
 
 @app.get('/helloworld')
 def helloworld():
-    return {"msg": "Hello World!"}
+    return {"prediction": 1}
 
 
 # Define the endpoint and it's response format
 @app.post("/predict/")
 async def predict(file: bytes = fastapi.File(...)):
-    dumpedPkl = joblib.load('dumps_pkl.pkl')
-    return {"prediction": pred(file, dumpedPkl)}
+    print("Inside predict()")
+    return {"prediction": pred(file)}
 
 
 def mediapipe_image(image):
@@ -63,13 +76,12 @@ def pre_process_img(file):
     return csv_file_string
 
 
-def pred(file, dumpedPkl):
+def pred(file):
     x = pre_process_img(file)
     if x is None or x == "":
         return "Invalid image"
 
     colNames = dumpedPkl["df_col_names"]
-    colNames.remove('Label')
 
     vals = [i.strip() for i in x[:-1].split(',')]
     df = pd.DataFrame(data=[vals], columns=list(colNames)).astype(float)
