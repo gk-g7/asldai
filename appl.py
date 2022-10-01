@@ -65,6 +65,7 @@ def mediapipe_image(image):
 def pre_process_img(file):
     img = np.frombuffer(file, dtype='uint8')
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
+    img = cv2.resize(img, (400, 400), interpolation = cv2.INTER_NEAREST)
     csv_file_string = ""
     try:
         for k in mediapipe_image(img):
